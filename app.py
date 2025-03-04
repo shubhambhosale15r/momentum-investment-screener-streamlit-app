@@ -76,6 +76,8 @@ st.markdown("""
             background-color: #1e1e1e; 
             color: #e0e0e0;
         }
+        /* Hiding the made with streamlit  */
+        .st-emotion-cache-1v0mbdj {display: none;}
     </style>
 """, unsafe_allow_html=True)
 
