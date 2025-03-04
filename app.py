@@ -76,11 +76,9 @@ st.markdown("""
             background-color: #1e1e1e; 
             color: #e0e0e0;
         }
-         /* Hide Streamlit branding elements */
-        .st-emotion-cache-1v0mbdj, /* "Made with Streamlit" watermark */
-        .st-emotion-cache-16txtl3, /* GitHub and Streamlit app logo */
-        [data-testid="stDecoration"] { 
-            display: none !important; 
+         footer {visibility: hidden;}
+        .st-emotion-cache-16txtl3 {display: none !important;} /* Hides GitHub profile & Streamlit branding */
+        [data-testid="stDecoration"] {display: none !important;} /* Ensures hidden elements */
         }
     </style>
 """, unsafe_allow_html=True)
