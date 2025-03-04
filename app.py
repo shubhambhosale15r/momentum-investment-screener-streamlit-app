@@ -79,16 +79,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Title and subtitle
-st.title("📈 Stock Analyzer")
-st.markdown("""
-    <div style="text-align: center; font-size: 1.2rem; color: #c0c0c0;">
-        Comprehensive momentum analysis with interactive visualizations.
-    </div>
-""", unsafe_allow_html=True)
-
-# The rest of your code remains unchanged...
-
 
 # Title and subtitle
 st.title("📈 Stock Analyzer")
