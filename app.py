@@ -76,17 +76,20 @@ st.markdown("""
             background-color: #1e1e1e; 
             color: #e0e0e0;
         }
-        /* Hide Streamlit footer */
-        footer {visibility: hidden;}
-        footer:after {content: ""; display: none;}
-
-        /* Hide "Hosted with Streamlit" branding */
-        .st-emotion-cache-16txtl3, [data-testid="stDecoration"] {display: none !important;}
-
-        /* Hide any remaining floating elements */
-        .stDeployButton {display: none !important;}
+        
     </style>
 """, unsafe_allow_html=True)
+
+hide_footer = """
+    <script>
+        setTimeout(function() {
+            let elements = document.querySelectorAll('footer, .st-emotion-cache-16txtl3, [data-testid="stDecoration"], .stDeployButton');
+            elements.forEach(el => el.style.display = 'none');
+        }, 1000);
+    </script>
+"""
+
+st.components.v1.html(hide_footer, height=0)
 
 
 # Title and subtitle
