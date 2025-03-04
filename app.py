@@ -7,17 +7,27 @@ from tqdm import tqdm
 import plotly.express as px
 import time
 
-# Set page config FIRST
-st.set_page_config(page_title="Stock Analyzer", page_icon="📈", layout="wide")
+# Set page config FIRST (removes menu and footer)
+st.set_page_config(
+    page_title="Stock Analyzer",
+    page_icon="📈",
+    layout="wide",
+    menu_items=None  # Hides the top-right menu button
+)
 
-# Custom CSS for a complete dark theme
+# Custom CSS to hide header and footer
 st.markdown("""
     <style>
+        /* Hide Streamlit's header and footer */
+        header {visibility: hidden;}
+        footer {visibility: hidden;}
+
         /* Set dark background for the app */
         .stApp {
             background: linear-gradient(135deg, #141E30, #243B55);
             color: #e0e0e0;
         }
+
         /* Title styling */
         h1 {
             color: #1E90FF;
@@ -25,6 +35,7 @@ st.markdown("""
             font-size: 3rem;
             font-weight: bold;
         }
+
         /* Button styling */
         .stButton button {
             background-color: #1E90FF;
@@ -35,18 +46,22 @@ st.markdown("""
             transition: background-color 0.3s ease;
             border: none;
         }
+
         .stButton button:hover {
             background-color: #1C86EE;
         }
+
         /* DataFrame styling */
         .stDataFrame {
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
+
         /* Progress bar styling */
         .stProgress > div > div {
             background-color: #1E90FF;
         }
+
         /* Metric box styling */
         .metric-box {
             background: #2C2C2C;
@@ -55,6 +70,7 @@ st.markdown("""
             margin: 10px;
             text-align: center;
         }
+
         /* Sidebar styling */
         .css-1d391kg { 
             background-color: #1e1e1e; 
@@ -62,6 +78,17 @@ st.markdown("""
         }
     </style>
 """, unsafe_allow_html=True)
+
+# Title and subtitle
+st.title("📈 Stock Analyzer")
+st.markdown("""
+    <div style="text-align: center; font-size: 1.2rem; color: #c0c0c0;">
+        Comprehensive momentum analysis with interactive visualizations.
+    </div>
+""", unsafe_allow_html=True)
+
+# The rest of your code remains unchanged...
+
 
 # Title and subtitle
 st.title("📈 Stock Analyzer")
