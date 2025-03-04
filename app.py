@@ -77,19 +77,31 @@ st.markdown("""
             color: #e0e0e0;
         }
         
+
+        /* Hide Streamlit's default header and footer */
+        header, footer {visibility: hidden !important;}
+
+        /* Additional hiding for "Hosted with Streamlit" */
+        .st-emotion-cache-16txtl3, 
+        [data-testid="stDecoration"], 
+        .stDeployButton,
+        .viewerBadge_link__qRIco {
+            display: none !important;
+            visibility: hidden !important;
+        }
+
+        /* Hide bottom right floating GitHub profile logo */
+        .styles_viewerBadge__1yB5_, 
+        .viewerBadge_container__r5tak {
+            display: none !important;
+            visibility: hidden !important;
+        }
+        
+        
     </style>
 """, unsafe_allow_html=True)
 
-hide_footer = """
-    <script>
-        setTimeout(function() {
-            let elements = document.querySelectorAll('footer, .st-emotion-cache-16txtl3, [data-testid="stDecoration"], .stDeployButton');
-            elements.forEach(el => el.style.display = 'none');
-        }, 1000);
-    </script>
-"""
 
-st.components.v1.html(hide_footer, height=0)
 
 
 # Title and subtitle
