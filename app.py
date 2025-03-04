@@ -76,10 +76,15 @@ st.markdown("""
             background-color: #1e1e1e; 
             color: #e0e0e0;
         }
-         footer {visibility: hidden;}
-        .st-emotion-cache-16txtl3 {display: none !important;} /* Hides GitHub profile & Streamlit branding */
-        [data-testid="stDecoration"] {display: none !important;} /* Ensures hidden elements */
-        }
+        /* Hide Streamlit footer */
+        footer {visibility: hidden;}
+        footer:after {content: ""; display: none;}
+
+        /* Hide "Hosted with Streamlit" branding */
+        .st-emotion-cache-16txtl3, [data-testid="stDecoration"] {display: none !important;}
+
+        /* Hide any remaining floating elements */
+        .stDeployButton {display: none !important;}
     </style>
 """, unsafe_allow_html=True)
 
