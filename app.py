@@ -18,90 +18,136 @@ st.set_page_config(
 # Custom CSS to hide header and footer
 st.markdown("""
     <style>
-        /* Hide Streamlit's header and footer */
+        /* Professional Dark Theme with Enhanced Alignment */
         header {visibility: hidden;}
         footer {visibility: hidden;}
 
-        /* Set dark background for the app */
         .stApp {
-            background: linear-gradient(135deg, #141E30, #243B55);
-            color: #e0e0e0;
+            background: linear-gradient(135deg, #0a192f, #172a45);
+            color: #ccd6f6;
+            font-family: 'Inter', sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 3rem !important;
         }
 
-        /* Title styling */
         h1 {
-            color: #1E90FF;
+            color: #64ffda;
             text-align: center;
-            font-size: 3rem;
-            font-weight: bold;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin: 1rem 0 2rem 0;
+            letter-spacing: -0.5px;
         }
 
-        /* Button styling */
         .stButton button {
-            background-color: #1E90FF;
-            color: #ffffff;
-            border-radius: 10px;
-            padding: 10px 20px;
-            font-size: 1.2rem;
-            transition: background-color 0.3s ease;
+            background: linear-gradient(135deg, #64ffda 0%, #4ecdc4 100%);
+            color: #0a192f !important;
+            border-radius: 8px;
+            padding: 12px 28px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
+            display: block;
+            margin: 1.5rem auto;
+            width: fit-content;
+            box-shadow: 0 4px 12px rgba(100, 255, 218, 0.2);
         }
 
         .stButton button:hover {
-            background-color: #1C86EE;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(100, 255, 218, 0.3);
         }
 
-        /* DataFrame styling */
         .stDataFrame {
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            border: 1px solid #233554 !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            margin: 2rem 0;
         }
 
-        /* Progress bar styling */
-        .stProgress > div > div {
-            background-color: #1E90FF;
-        }
-
-        /* Metric box styling */
         .metric-box {
-            background: #2C2C2C;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 10px;
+            background: #112240;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid #233554;
             text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
-        /* Sidebar styling */
         .css-1d391kg { 
-            background-color: #1e1e1e; 
-            color: #e0e0e0;
+            background-color: #0a192f !important;
+            border-right: 1px solid #233554 !important;
         }
-        
 
-        /* Hide Streamlit's default header and footer */
-        header, footer {visibility: hidden !important;}
+        /* Unified Container Styling */
+        .stContainer {
+            padding: 2rem;
+            margin: 2rem 0;
+            background: #112240;
+            border-radius: 12px;
+            border: 1px solid #233554;
+        }
 
-        /* Additional hiding for "Hosted with Streamlit" */
+        /* Improved Typography Hierarchy */
+        h2 {
+            color: #8892b0;
+            font-size: 1.5rem;
+            margin: 1.5rem 0;
+            font-weight: 500;
+        }
+
+        h3 {
+            color: #64ffda;
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        /* Enhanced Responsive Design */
+        @media (max-width: 768px) {
+            .stApp {
+                padding: 1.5rem !important;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+                margin: 0.5rem 0 1.5rem 0;
+            }
+
+            .stButton button {
+                width: 100%;
+                max-width: none;
+            }
+        }
+
+        /* Consistent Spacing */
+        .stMarkdown, .stDataFrame, .stPlotlyChart {
+            margin: 1.5rem 0 !important;
+        }
+
+        /* Professional Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: #0a192f;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #64ffda;
+            border-radius: 4px;
+        }
+
+        /* Hidden Elements */
         .st-emotion-cache-16txtl3, 
         [data-testid="stDecoration"], 
         .stDeployButton,
-        .viewerBadge_link__qRIco {
+        .viewerBadge_link__qRIco,
+        .styles_viewerBadge__1yB5_ {
             display: none !important;
-            visibility: hidden !important;
         }
-
-        /* Hide bottom right floating GitHub profile logo */
-        .styles_viewerBadge__1yB5_, 
-        .viewerBadge_container__r5tak {
-            display: none !important;
-            visibility: hidden !important;
-        }
-        
-        
     </style>
 """, unsafe_allow_html=True)
-
-
 
 
 # Title and subtitle
@@ -138,19 +184,32 @@ nifty_50_stocks = [
     "SUNPHARMA.NS", "TCS.NS", "TATACONSUM.NS", "TATAMOTORS.NS", "TATASTEEL.NS",
     "TECHM.NS", "TITAN.NS", "TRENT.NS", "ULTRACEMCO.NS", "WIPRO.NS"
 ]
+nifty_smallcap_50_symbols=[
+    "360ONE.NS", "AARTIIND.NS", "ABREL.NS", "ARE&M.NS", "ANGELONE.NS", "APARINDS.NS", "ATUL.NS",
+    "BSOFT.NS", "BLUESTARCO.NS", "BRIGADE.NS", "CESC.NS", "CASTROLIND.NS", "CDSL.NS", "CAMS.NS",
+    "CROMPTON.NS", "CYIENT.NS", "FINCABLES.NS", "GLENMARK.NS", "GESHIP.NS", "GSPL.NS", "HFCL.NS",
+    "HINDCOPPER.NS", "IIFL.NS", "INDIAMART.NS", "IEX.NS", "KPIL.NS", "KARURVYSYA.NS", "LAURUSLABS.NS",
+    "MGL.NS", "MANAPPURAM.NS", "MCX.NS", "NATCOPHARM.NS", "NBCC.NS", "NCC.NS", "NH.NS", "NATIONALUM.NS",
+    "NAVINFLUOR.NS", "PNBHOUSING.NS", "PVRINOX.NS", "PEL.NS", "PPLPHARMA.NS", "RBLBANK.NS", "RADICO.NS",
+    "RKFORGE.NS", "REDINGTON.NS", "SONATSOFTW.NS", "TEJASNET.NS", "RAMCOCEM.NS", "ZEEL.NS", "ZENSARTECH.NS"
+]
 
 # Sidebar: Allow user to choose the stock universe (read-only)
 stock_universe = st.sidebar.radio(
     "Select Stock Universe",
-    ("Nifty Midcap 50 Stocks", "Nifty 50 Stocks")
+    ("Nifty Midcap 50 Stocks", "Nifty 50 Stocks","Nifty Smallcap 50 Stocks")
 )
 
 if stock_universe == "Nifty Midcap 50 Stocks":
     selected_stocks = nifty_midcap_50_symbols
     st.sidebar.info("You have selected the Nifty Midcap 50 stock list.")
+elif stock_universe == "Nifty Smallcap 50 Stocks":
+    selected_stocks = nifty_smallcap_50_symbols
+    st.sidebar.info("You have selected the Nifty Smallcap 50 stock list.")
 else:
     selected_stocks = nifty_50_stocks
-    st.sidebar.info("You have selected the Nifty 50 stock list.")
+    st.sidebar.info("You have selected the Nifty 50 Stocks stock list.")
+
 
 # Cache data to optimize downloads
 @st.cache_data(show_spinner=False)
@@ -168,6 +227,7 @@ def download_stock_data(ticker, start_date, end_date, retries=3):
     print(f"Failed to download data for {ticker} after {retries} retries")
     return pd.DataFrame()
 
+
 # Calculate returns for a given period
 def calculate_returns(df, period):
     if len(df) >= period:
@@ -177,6 +237,7 @@ def calculate_returns(df, period):
         return ((end_price - start_price) / start_price).item()
     else:
         return np.nan
+
 
 # Main application function
 def main():
@@ -240,7 +301,7 @@ def main():
             tab1, tab2, tab3 = st.tabs(["Data Table", "Visualizations", "Key Metrics"])
 
             with tab1:
-                st.subheader("Analysis Results")
+                st.subheader(f"Analysis Results for {stock_universe}")
                 st.dataframe(results_df[["Ticker", "Momentum Score", "12-Month Return (%)",
                                          "6-Month Return (%)", "3-Month Return (%)", "Annualized Volatility"]],
                              height=500)
@@ -272,6 +333,7 @@ def main():
                                   delta=f"{worst['12-Month Return (%)']:.2f}%")
                 else:
                     st.write("No data available.")
+
 
 if __name__ == '__main__':
     main()
