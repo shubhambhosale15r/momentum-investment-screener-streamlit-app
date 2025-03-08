@@ -193,11 +193,41 @@ nifty_smallcap_50_symbols=[
     "NAVINFLUOR.NS", "PNBHOUSING.NS", "PVRINOX.NS", "PEL.NS", "PPLPHARMA.NS", "RBLBANK.NS", "RADICO.NS",
     "RKFORGE.NS", "REDINGTON.NS", "SONATSOFTW.NS", "TEJASNET.NS", "RAMCOCEM.NS", "ZEEL.NS", "ZENSARTECH.NS"
 ]
-
+nifty_auto_symbols = [
+    "APOLLOTYRE.NS",
+    "ASHOKLEY.NS",
+    "BAJAJ-AUTO.NS",
+    "BALKRISIND.NS",
+    "BHARATFORG.NS",
+    "BOSCHLTD.NS",
+    "EICHERMOT.NS",
+    "EXIDEIND.NS",
+    "HEROMOTOCO.NS",
+    "MRF.NS",
+    "M&M.NS",
+    "MARUTI.NS",
+    "MOTHERSON.NS",
+    "TVSMOTOR.NS",
+    "TATAMOTORS.NS"
+]
+nifty_bank_symbols = [
+    "AUBANK.NS",
+    "AXISBANK.NS",
+    "BANKBARODA.NS",
+    "CANBK.NS",
+    "FEDERALBNK.NS",
+    "HDFCBANK.NS",
+    "ICICIBANK.NS",
+    "IDFCFIRSTB.NS",
+    "INDUSINDBK.NS",
+    "KOTAKBANK.NS",
+    "PNB.NS",
+    "SBIN.NS"
+]
 # Sidebar: Allow user to choose the stock universe (read-only)
 stock_universe = st.sidebar.radio(
     "Select Stock Universe",
-    ("Nifty Midcap 50 Stocks", "Nifty 50 Stocks","Nifty Smallcap 50 Stocks")
+    ("Nifty Midcap 50 Stocks", "Nifty 50 Stocks","Nifty Smallcap 50 Stocks","Nifty Nifty Auto Stocks","Nifty Bank Stocks")
 )
 
 if stock_universe == "Nifty Midcap 50 Stocks":
@@ -206,6 +236,12 @@ if stock_universe == "Nifty Midcap 50 Stocks":
 elif stock_universe == "Nifty Smallcap 50 Stocks":
     selected_stocks = nifty_smallcap_50_symbols
     st.sidebar.info("You have selected the Nifty Smallcap 50 stock list.")
+elif stock_universe == "Nifty Nifty Auto Stocks":
+    selected_stocks = nifty_auto_symbols
+    st.sidebar.info("You have selected the Nifty Bank stock list.")
+elif stock_universe == "Nifty Bank Stocks":
+    selected_stocks = nifty_bank_symbols
+    st.sidebar.info("You have selected the Nifty Bank stock list.")
 else:
     selected_stocks = nifty_50_stocks
     st.sidebar.info("You have selected the Nifty 50 Stocks stock list.")
