@@ -306,8 +306,7 @@ def main():
 
                 st.dataframe(
                     universe_df.style
-                    .format({'Average Momentum Score': '{:.4f}'})
-                    .background_gradient(subset=['Average Momentum Score']),
+                    .format({'Average Momentum Score': '{:.4f}'}),
                     height=400
                 )
 
@@ -371,7 +370,7 @@ def main():
                     "3-Month Return (%)": "{:.2f}%",
                     "Annualized Volatility": "{:.4f}",
                     "Momentum Score": "{:.4f}"
-                }).background_gradient(subset=['Momentum Score'])
+                })
 
                 st.dataframe(styled_df, use_container_width=True)
             else:
