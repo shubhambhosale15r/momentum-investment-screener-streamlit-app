@@ -3,7 +3,6 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
-import plotly.express as px  # Import is present, but not being used. Clean up if not needed.
 from stocklist import *
 
 # Configuration
@@ -19,14 +18,19 @@ st.set_page_config(
     menu_items=None,  # Hides the top-right menu button
 )
 
+
 # --- Session State Initialization ---
 def initialize_session_state():
     if 'view_universe_rankings' not in st.session_state:
         st.session_state.view_universe_rankings = False
+    if 'view_recommended_stocks' not in st.session_state:
+        st.session_state.view_recommended_stocks = False
     if 'analyze_button_clicked' not in st.session_state:
         st.session_state.analyze_button_clicked = False
 
+
 initialize_session_state()
+
 
 # --- CSS Styling ---
 def inject_custom_css():
@@ -108,7 +112,9 @@ def inject_custom_css():
         </style>
     """, unsafe_allow_html=True)
 
+
 inject_custom_css()
+
 
 # --- Title and Subtitle ---
 def display_header():
@@ -119,7 +125,9 @@ def display_header():
         </div>
     """, unsafe_allow_html=True)
 
+
 display_header()
+
 
 
 
@@ -136,22 +144,17 @@ def create_sidebar():
         if st.button("Stock Universes Ranks", key="universe_ranks_sidebar"):
             st.session_state.view_universe_rankings = True
             st.rerun()
+
+        # Add the "Recommended Stocks" Button
+        if st.button("Recommended Stocks", key="recommended_stocks_sidebar"):
+            st.session_state.view_recommended_stocks = True
+            st.rerun()
+
     return stock_universe_name, selected_stocks
+
 
 stock_universe_name, selected_stocks = create_sidebar()
 
-# --- Main UI ---
-def create_main_ui():
-    col1, col2 = st.columns([0.75, 1])
-
-    with col2:
-        st.markdown('<div class="center-div">', unsafe_allow_html=True)
-        if st.button("Analyze Stocks", key="analyze_stocks_main"):
-            st.session_state.analyze_button_clicked = True
-            st.rerun()
-        st.markdown('</div>', unsafe_allow_html=True)
-
-create_main_ui()
 
 # --- Data Download ---
 @st.cache_data(show_spinner=False)
@@ -169,6 +172,7 @@ def download_stock_data(ticker, start_date, end_date, retries=3):
     print(f"Failed to download data for {ticker} after {retries} retries")
     return pd.DataFrame()
 
+
 # --- Calculate Returns ---
 def calculate_returns(df, period):
     if len(df) >= period:
@@ -178,6 +182,7 @@ def calculate_returns(df, period):
         return ((end_price - start_price) / start_price).item()
     else:
         return np.nan
+
 
 # --- Analyze Universe ---
 def analyze_universe(universe_name, universe_symbols):
@@ -218,28 +223,100 @@ def analyze_universe(universe_name, universe_symbols):
             "6-Month Return (%)": return_6M * 100 if pd.notna(return_6M) else np.nan,
             "3-Month Return (%)": return_3M * 100 if pd.notna(return_3M) else np.nan,
             "Annualized Volatility": weekly_volatility
-
         })
 
     results_df = pd.DataFrame(results)
     avg_momentum_score = results_df["Momentum Score"].mean() if not results_df.empty else np.nan
     return results_df, avg_momentum_score
 
-# --- Main Function ---
-def main():
-    universe_list = list(STOCK_UNIVERSE.items())
 
-    # Handle universe rankings view
+# --- Get Top Universes by Momentum ---
+def get_top_universes_by_momentum():
+    universe_results = []
+    for name, symbols in STOCK_UNIVERSE.items():
+        _, avg_momentum = analyze_universe(name, symbols)
+        universe_results.append({
+            "Stock Universe": name,
+            "Average Momentum Score": avg_momentum
+        })
+
+    # Sort the universes by Average Momentum Score
+    universe_df = pd.DataFrame(universe_results)
+    universe_df.sort_values(by="Average Momentum Score", ascending=False, inplace=True)
+
+    # Get the top 5 universes based on the momentum score
+    top_universes = universe_df.head(5)
+    return top_universes
+
+
+# --- Get Top Stocks from Universe ---
+def get_top_stocks_from_universe(universe_name, universe_symbols):
+    results_df, _ = analyze_universe(universe_name, universe_symbols)
+    if not results_df.empty:
+        # Sort by momentum score
+        results_df.sort_values(by="Momentum Score", ascending=False, inplace=True)
+        # Get the top 5 stocks by momentum score
+        top_stocks = results_df.head(5)
+        return top_stocks
+    else:
+        return pd.DataFrame()
+
+
+# --- Main Application ---
+# --- Main Application ---
+def main():
+    if st.session_state.get('view_recommended_stocks', False):
+        # Show the loading animation when the "Recommended Stocks" button is clicked
+        loading_container = st.empty()
+        loading_container.markdown(f"""
+            <div class="loading-container">
+                <div class="lds-ripple"><div></div><div></div></div>
+                <p class="loading-text">{LOADING_TEXT}</p>
+            </div>
+        """, unsafe_allow_html=True)
+
+        try:
+            # Wait for the data to be processed
+            top_universes = get_top_universes_by_momentum()
+
+            # Once data is ready, clear the loading animation
+            loading_container.empty()
+
+            st.subheader("Top 5 Stock Universes Based on Momentum Score")
+
+            for _, row in top_universes.iterrows():
+                st.markdown(f"### {row['Stock Universe']} (Momentum Score: {row['Average Momentum Score']:.4f})")
+
+                # Get and display the top 5 stocks from this universe
+                universe_name = row['Stock Universe']
+                universe_symbols = STOCK_UNIVERSE[universe_name]
+                top_stocks = get_top_stocks_from_universe(universe_name, universe_symbols)
+
+                if not top_stocks.empty:
+                    st.dataframe(
+                        top_stocks[['Ticker', 'Momentum Score', '12-Month Return (%)', '6-Month Return (%)',
+                                    '3-Month Return (%)']],
+                        height=300
+                    )
+                else:
+                    st.warning(f"No stocks data available for {universe_name}.")
+
+        except Exception as e:
+            loading_container.empty()
+            st.error(f"An error occurred: {str(e)}")
+        finally:
+            st.session_state.view_recommended_stocks = False  # Reset the state
+
+    # Existing code to handle universe rankings or stock analysis
     if st.session_state.get('view_universe_rankings', False):
         st.subheader("Stock Universes Ranking by Average Momentum Score")
-
         universe_results = []
         progress_container = st.empty()
         progress_bar = st.progress(0)
         status_text = st.empty()
 
         try:
-            for idx, (name, symbols) in enumerate(universe_list):
+            for idx, (name, symbols) in enumerate(STOCK_UNIVERSE.items()):
                 with progress_container:
                     status_text.text(f"🔄 Analyzing {name}...")
                     _, avg_momentum = analyze_universe(name, symbols)
@@ -247,7 +324,7 @@ def main():
                         "Stock Universe": name,
                         "Average Momentum Score": avg_momentum
                     })
-                    progress = (idx + 1) / len(universe_list)
+                    progress = (idx + 1) / len(STOCK_UNIVERSE)
                     progress_bar.progress(progress)
 
             # Clear progress indicators
@@ -337,6 +414,10 @@ def main():
             st.error(f"An error occurred: {str(e)}")
         finally:
             st.session_state.analyze_button_clicked = False
+
+
+if __name__ == '__main__':
+    main()
 
 if __name__ == '__main__':
     main()
