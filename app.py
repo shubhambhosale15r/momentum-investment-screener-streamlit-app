@@ -141,6 +141,11 @@ def create_sidebar():
         selected_stocks = STOCK_UNIVERSE[stock_universe_name]
         st.info(f"You have selected the {stock_universe_name} stock list.")
 
+        # Add the "Analyze Stock Universe" Button
+        if st.button("Analyze Stock Universe", key="analyze_stock_universe_sidebar"):
+            st.session_state.analyze_button_clicked = True  # Set the state to True for analysis
+            st.rerun()  # Rerun to trigger the analysis logic
+
         if st.button("Stock Universes Ranks", key="universe_ranks_sidebar"):
             st.session_state.view_universe_rankings = True
             st.rerun()
@@ -265,6 +270,52 @@ def get_top_stocks_from_universe(universe_name, universe_symbols):
 # --- Main Application ---
 # --- Main Application ---
 def main():
+    # Analyse Stock Universe Button
+    if st.session_state.get('analyze_button_clicked', False):
+        st.subheader(f"Momentum Analysis for {stock_universe_name}")
+
+        # Placeholder for analysis results
+        analysis_placeholder = st.empty()
+
+        try:
+            # Show loading container
+            with analysis_placeholder:
+                st.markdown(f"""
+                    <div class="loading-container">
+                        <div class="lds-ripple"><div></div><div></div></div>
+                        <p class="loading-text">{LOADING_TEXT}</p>
+                    </div>
+                """, unsafe_allow_html=True)
+
+            # Perform analysis and display results
+            results_df, _ = analyze_universe(stock_universe_name, selected_stocks)
+
+            # Clear loading container
+            analysis_placeholder.empty()
+
+            if not results_df.empty:
+                # Sort by Momentum Score
+                results_df.sort_values(by="Momentum Score", ascending=False, inplace=True)
+
+                # Format and display the dataframe
+                styled_df = results_df.style.format({
+                    "12-Month Return (%)": "{:.2f}%",
+                    "6-Month Return (%)": "{:.2f}%",
+                    "3-Month Return (%)": "{:.2f}%",
+                    "Annualized Volatility": "{:.4f}",
+                    "Momentum Score": "{:.4f}"
+                })
+
+                st.dataframe(styled_df, use_container_width=True)
+            else:
+                st.warning("No data available for the selected stock universe.")
+
+        except Exception as e:
+            analysis_placeholder.empty()
+            st.error(f"An error occurred: {str(e)}")
+        finally:
+            st.session_state.analyze_button_clicked = False  # Reset the button state
+        # Recommended Stock Button
     if st.session_state.get('view_recommended_stocks', False):
         # Show the loading animation when the "Recommended Stocks" button is clicked
         loading_container = st.empty()
@@ -415,6 +466,9 @@ def main():
         finally:
             st.session_state.analyze_button_clicked = False
 
+
+if __name__ == '__main__':
+    main()
 
 if __name__ == '__main__':
     main()
