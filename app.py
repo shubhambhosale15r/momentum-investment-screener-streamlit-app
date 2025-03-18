@@ -116,25 +116,22 @@ def inject_custom_css():
 inject_custom_css()
 
 
+
+
 # --- Title and Subtitle ---
 def display_header():
     st.markdown(f"""
         <h1 style='text-align: center;'>{PAGE_ICON} {PAGE_TITLE}</h1>
         <div style="text-align: center; font-size: 1.2rem; color: #c0c0c0;">
-            Unlock the Power of Data-Driven Stock Analysis with the Stock Analyzer App! 📈🚀
-            Are you looking to make smarter, data-driven investment decisions? Look no further! 
-            Stock Analyzer App offers a comprehensive and interactive tool to help you analyze and identify the most promising stocks based on momentum.
-            Who is this for?
-            Retail Investors: Looking for a smart, user-friendly way to analyze stocks without complex tools or jargon.
-            Professional Traders: Need an intuitive platform to rapidly evaluate stock performance and make informed trades.
-            Financial Analysts: Benefit from robust analysis and visualizations to support investment recommendations.
-            Financial Advisors: Quickly create momentum-based recommendations for clients, saving time on individual stock research.
-
+            Unlock the Power of Data-Driven Stock Analysis with the Stock Analyzer App! 📈🚀<br><br>
+            Are you looking to make smarter, data-driven investment decisions?<br><br>
+            Look no further!<br><br>
+            Stock Analyzer App offers a comprehensive and interactive tool to help you analyze and identify the most promising stocks based on momentum.<br><br>
         </div>
     """, unsafe_allow_html=True)
 
-
 display_header()
+
 
 
 
