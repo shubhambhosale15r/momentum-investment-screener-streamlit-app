@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 import plotly.express as px  # Import is present, but not being used. Clean up if not needed.
+from stocklist import *
 
 # Configuration
 PAGE_TITLE = "Stock Analyzer"
@@ -120,52 +121,7 @@ def display_header():
 
 display_header()
 
-# --- Stock Lists ---
-STOCK_UNIVERSE = {
-    "Nifty Midcap 50 Stocks": [
-        "ACC.NS", "APLAPOLLO.NS", "AUBANK.NS", "ABCAPITAL.NS", "ALKEM.NS",
-        "ASHOKLEY.NS", "ASTRAL.NS", "AUROPHARMA.NS", "BHARATFORG.NS", "CGPOWER.NS",
-        "COLPAL.NS", "CONCOR.NS", "CUMMINSIND.NS", "DIXON.NS", "FEDERALBNK.NS",
-        "GMRAIRPORT.NS", "GODREJPROP.NS", "HDFCAMC.NS", "HINDPETRO.NS", "IDFCFIRSTB.NS",
-        "INDHOTEL.NS", "INDUSTOWER.NS", "KPITTECH.NS", "LTF.NS", "LUPIN.NS", "MRF.NS",
-        "MARICO.NS", "MAXHEALTH.NS", "MPHASIS.NS", "MUTHOOTFIN.NS", "NMDC.NS",
-        "OBEROIRLTY.NS", "OFSS.NS", "POLICYBZR.NS", "PIIND.NS", "PERSISTENT.NS",
-        "PETRONET.NS", "PHOENIXLTD.NS", "POLYCAB.NS", "SBICARD.NS", "SRF.NS", "SAIL.NS",
-        "SUNDARMFIN.NS", "SUPREMEIND.NS", "SUZLON.NS", "TATACOMM.NS", "UPL.NS", "IDEA.NS",
-        "VOLTAS.NS", "YESBANK.NS"
-    ],
-    "Nifty 50 Stocks": [
-        "ADANIENT.NS", "ADANIPORTS.NS", "APOLLOHOSP.NS", "ASIANPAINT.NS", "AXISBANK.NS",
-        "BAJAJ-AUTO.NS", "BAJFINANCE.NS", "BAJAJFINSV.NS", "BEL.NS", "BPCL.NS",
-        "BHARTIARTL.NS", "BRITANNIA.NS", "CIPLA.NS", "COALINDIA.NS", "DRREDDY.NS",
-        "EICHERMOT.NS", "GRASIM.NS", "HCLTECH.NS", "HDFCBANK.NS", "HDFCLIFE.NS",
-        "HEROMOTOCO.NS", "HINDALCO.NS", "HINDUNILVR.NS", "ICICIBANK.NS", "ITC.NS",
-        "INDUSINDBK.NS", "INFY.NS", "JSWSTEEL.NS", "KOTAKBANK.NS", "LT.NS",
-        "M&M.NS", "MARUTI.NS", "NTPC.NS", "NESTLEIND.NS", "ONGC.NS",
-        "POWERGRID.NS", "RELIANCE.NS", "SBILIFE.NS", "SHRIRAMFIN.NS", "SBIN.NS",
-        "SUNPHARMA.NS", "TCS.NS", "TATACONSUM.NS", "TATAMOTORS.NS", "TATASTEEL.NS",
-        "TECHM.NS", "TITAN.NS", "TRENT.NS", "ULTRACEMCO.NS", "WIPRO.NS"
-    ],
-    "Nifty Smallcap 50 Stocks": [
-        "360ONE.NS", "AARTIIND.NS", "ABREL.NS", "ARE&M.NS", "ANGELONE.NS", "APARINDS.NS", "ATUL.NS",
-        "BSOFT.NS", "BLUESTARCO.NS", "BRIGADE.NS", "CESC.NS", "CASTROLIND.NS", "CDSL.NS", "CAMS.NS",
-        "CROMPTON.NS", "CYIENT.NS", "FINCABLES.NS", "GLENMARK.NS", "GESHIP.NS", "GSPL.NS", "HFCL.NS",
-        "HINDCOPPER.NS", "IIFL.NS", "INDIAMART.NS", "IEX.NS", "KPIL.NS", "KARURVYSYA.NS", "LAURUSLABS.NS",
-        "MGL.NS", "MANAPPURAM.NS", "MCX.NS", "NATCOPHARM.NS", "NBCC.NS", "NCC.NS", "NH.NS", "NATIONALUM.NS",
-        "NAVINFLUOR.NS", "PNBHOUSING.NS", "PVRINOX.NS", "PEL.NS", "PPLPHARMA.NS", "RBLBANK.NS", "RADICO.NS",
-        "RKFORGE.NS", "REDINGTON.NS", "SONATSOFTW.NS", "TEJASNET.NS", "RAMCOCEM.NS", "ZEEL.NS", "ZENSARTECH.NS"
-    ],
-    "Nifty Auto Stocks": [
-        "APOLLOTYRE.NS", "ASHOKLEY.NS", "BAJAJ-AUTO.NS", "BALKRISIND.NS", "BHARATFORG.NS",
-        "BOSCHLTD.NS", "EICHERMOT.NS", "EXIDEIND.NS", "HEROMOTOCO.NS", "MRF.NS",
-        "M&M.NS", "MARUTI.NS", "MOTHERSON.NS", "TVSMOTOR.NS", "TATAMOTORS.NS"
-    ],
-    "Nifty Bank Stocks": [
-        "AUBANK.NS", "AXISBANK.NS", "BANKBARODA.NS", "CANBK.NS", "FEDERALBNK.NS",
-        "HDFCBANK.NS", "ICICIBANK.NS", "IDFCFIRSTB.NS", "INDUSINDBK.NS", "KOTAKBANK.NS",
-        "PNB.NS", "SBIN.NS"
-    ]
-}
+
 
 # --- Sidebar ---
 def create_sidebar():
