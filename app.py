@@ -123,10 +123,9 @@ def display_header():
     st.markdown(f"""
         <h1 style='text-align: center;'>{PAGE_ICON} {PAGE_TITLE}</h1>
         <div style="text-align: center; font-size: 1.2rem; color: #c0c0c0;">
-            Unlock the Power of Data-Driven Stock Analysis with the Stock Analyzer App! 📈🚀<br><br>
-            Are you looking to make smarter, data-driven investment decisions?<br><br>
-            Look no further!<br><br>
-            Stock Analyzer App offers a comprehensive and interactive tool to help you analyze and identify the most promising stocks based on momentum.<br><br>
+           Select a stock universe then click on Analyse Stock Universe Button to Find momentum stocks in that specific sector/index<br><br>
+            Click on Stock Universes Rank to get the sector/indices that are in momentum<br><br>
+            Click on Recommended Stock to get stock from sector/indices which are in momentum<br><br>
         </div>
     """, unsafe_allow_html=True)
 
