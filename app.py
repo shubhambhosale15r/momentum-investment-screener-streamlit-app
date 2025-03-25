@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from stocklist import *
 
 # Configuration
-PAGE_TITLE = "Stock Analyzer"
+PAGE_TITLE = "Momentum Investment Scanner"
 PAGE_ICON = "📈"
 LOADING_TEXT = "Analyzing Stocks..."
 
