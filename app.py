@@ -254,7 +254,7 @@ def get_top_universes_by_momentum():
     universe_df.sort_values(by="Average Momentum Score", ascending=False, inplace=True)
 
     # Get the top 5 universes based on the momentum score
-    top_universes = universe_df.head(5)
+    top_universes = universe_df
     return top_universes
 
 
@@ -265,7 +265,7 @@ def get_top_stocks_from_universe(universe_name, universe_symbols):
         # Sort by momentum score
         results_df.sort_values(by="Momentum Score", ascending=False, inplace=True)
         # Get the top 5 stocks by momentum score
-        top_stocks = results_df.head(5)
+        top_stocks = results_df
         return top_stocks
     else:
         return pd.DataFrame()
